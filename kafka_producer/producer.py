@@ -2,9 +2,9 @@ from kafka import KafkaProducer
 from json import dumps
 
 class KafkaPurchaseProducer:
-    def __init__(self, kafka_bootstrap_servers):
+    def __init__(self, bootstrap_servers):
         self.producer = KafkaProducer(
-            bootstrap_servers=kafka_bootstrap_servers,
+            bootstrap_servers=bootstrap_servers,
             value_serializer=lambda x: dumps(x).encode('utf-8')
         )
 
