@@ -1,16 +1,11 @@
-from flask import Flask, jsonify
+from flask import Flask
 from kafka_producer.producer import KafkaPurchaseProducer
-
-from json import dumps
+from api.rest_controller import RestController
 
 
 app = Flask(__name__)
 
 producer = KafkaPurchaseProducer("localhost:9092")
+rest_controller = RestController(app=app, producer=producer)
 
-@app.route('/customers/<int:customer_id>/purchase/<int:item_id>', methods=['POST'])
-def publish_purchase(customer_id, item_id):
-    producer.publish_purchase(customer_id, item_id)
-    return jsonify({"message": "Purchase event published to Kafka"})
-
-print("hi")
+rest_controller.register_endpoints()
