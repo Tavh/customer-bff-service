@@ -7,11 +7,12 @@ from util.logger import get_logger
 # Get configuration from environment variables
 bootstrap_servers = os.environ['BOOTSTRAP_SERVERS']
 topic = os.environ['TOPIC']
+customer_management_url = os.environ['CUSTOMER_MANAGEMENT_URL']
 
 logger = get_logger(__name__)
 
 # Log the configuration
-logger.info(f"Starting with config: bootstrap_servers={bootstrap_servers}, topic={topic}")
+logger.info(f"Starting with config: bootstrap_servers={bootstrap_servers}, customer_management_url={customer_management_url} topic={topic}")
 
 # Create a Flask app
 app = Flask(__name__)
@@ -20,7 +21,7 @@ app = Flask(__name__)
 producer = KafkaPurchaseProducer(bootstrap_servers=bootstrap_servers, topic=topic)
 
 # Create a RestController instance to handle incoming HTTP requests
-rest_controller = RestController(app=app, producer=producer)
+rest_controller = RestController(app=app, customer_management_url=customer_management_url, producer=producer)
 
 # Register the REST endpoints with the RestController
 rest_controller.register_endpoints()
