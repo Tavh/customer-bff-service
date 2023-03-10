@@ -4,5 +4,5 @@ install:
 test: 
 	python -m unittest discover -s database -p '*_test.py'
 
-run: 
+run-local: 
 	BOOTSTRAP_SERVERS=localhost:29092 TOPIC="purchases" FLASK_APP=main.py flask run --port=8080
